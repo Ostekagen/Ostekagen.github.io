@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NorthSide 2026</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    height:100vh;
+    overflow:hidden;
+}
+
+.background{
+    position:fixed;
+    inset:0;
+    background-image:url("background.jpg");
+    background-size:cover;
+    background-position:center;
+    filter:brightness(0.55);
+}
+
+.overlay{
+    position:relative;
+    z-index:2;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+h1{
+    font-size:clamp(3rem,8vw,6rem);
+    margin-bottom:10px;
+    text-shadow:0 0 20px rgba(0,0,0,.7);
+}
+
+.subtitle{
+    font-size:1.2rem;
+    margin-bottom:40px;
+    opacity:0.9;
+}
+
+.countdown{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.box{
+    min-width:120px;
+    padding:20px;
+    border-radius:20px;
+    background:rgba(0,0,0,.35);
+    backdrop-filter:blur(8px);
+}
+
+.number{
+    font-size:3rem;
+    font-weight:bold;
+}
+
+.label{
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:.8rem;
+}
+
+@media(max-width:600px){
+    .box{
+        min-width:90px;
+        padding:15px;
+    }
+
+    .number{
+        font-size:2rem;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="background"></div>
+
+<div class="overlay">
+    <h1>NorthSide 2026</h1>
+    <div class="subtitle">5 June 2026 • 12:00 • Aarhus, Denmark</div>
+
+    <div class="countdown">
+        <div class="box">
+            <div id="days" class="number">0</div>
+            <div class="label">Days</div>
+        </div>
+
+        <div class="box">
+            <div id="hours" class="number">0</div>
+            <div class="label">Hours</div>
+        </div>
+
+        <div class="box">
+            <div id="minutes" class="number">0</div>
+            <div class="label">Minutes</div>
+        </div>
+
+        <div class="box">
+            <div id="seconds" class="number">0</div>
+            <div class="label">Seconds</div>
+        </div>
+    </div>
+</div>
+
+<script>
+const targetDate = new Date("2026-06-05T12:00:00+02:00");
+
+function updateCountdown() {
+    const now = new Date();
+    const diff = targetDate - now;
+
+    if(diff <= 0){
+        document.querySelector(".countdown").innerHTML =
+            "<h2>🎉 NorthSide has started! 🎉</h2>";
+        return;
+    }
+
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff / (1000*60*60)) % 24);
+    const minutes = Math.floor((diff / (1000*60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
